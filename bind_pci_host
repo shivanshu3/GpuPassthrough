@@ -1,0 +1,34 @@
+#!/bin/bash
+set -x
+
+echo Starting to bind the GPU... >> /home/shigoyal/Documents/gpu_passthrough/libvert_hooks/log
+  
+# Re-Bind GPU to Nvidia Driver
+virsh nodedev-reattach pci_0000_0a_00_1
+virsh nodedev-reattach pci_0000_0a_00_0
+
+# Re-Bind the audio controller
+virsh nodedev-reattach pci_0000_0c_00_4
+
+# Reload nvidia modules
+modprobe nvidia
+modprobe nvidia_modeset
+modprobe nvidia_uvm
+modprobe nvidia_drm
+
+# Rebind VT consoles
+echo 1 > /sys/class/vtconsole/vtcon0/bind
+echo 1 > /sys/class/vtconsole/vtcon1/bind
+
+nvidia-xconfig --query-gpu-info > /dev/null 2>&1
+echo "efi-framebuffer.0" > /sys/bus/platform/drivers/efi-framebuffer/bind
+
+# Restart Display Manager
+systemctl start display-manager.service
+
+# Restart the audio service
+killall pulseaudio
+pulseaudio --start
+
+echo Finished binding the GPU... >> /home/shigoyal/Documents/gpu_passthrough/libvert_hooks/log
+
