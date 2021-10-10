@@ -32,5 +32,10 @@ modprobe vfio-pci
 # Stop audio service
 pulseaudio --kill
 
+# Set up port forwarding for RDC etc
+iptables -t nat -I PREROUTING -p tcp -d 192.168.0.100 --dport 3389 -j DNAT \
+    --to 192.168.122.100:3389
+iptables -t filter -I FORWARD -p tcp -d 192.168.122.100 --dport 3389 -j ACCEPT
+
 echo Finished unbinding the GPU... >> /home/shigoyal/Documents/gpu_passthrough/libvert_hooks/log
 
