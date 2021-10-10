@@ -1,12 +1,12 @@
 #!/bin/bash
-# Helpful to read output when debugging
 set -x
 
 echo Starting to unbind the GPU... >> /home/shigoyal/Documents/gpu_passthrough/libvert_hooks/log
 
 # Stop display manager
 systemctl stop display-manager.service
-## Uncomment the following line if you use GDM
+# Gnome is kinda buggy and stopping the display manager doesn't always stop
+# the real Gnome display manager, so manually do it
 killall gdm-x-session
 
 # Unbind VTconsoles
@@ -16,7 +16,7 @@ echo 0 > /sys/class/vtconsole/vtcon1/bind
 # Unbind EFI-Framebuffer
 echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/unbind
 
-# Avoid a Race condition by waiting 2 seconds. This can be calibrated to be shorter or longer if required for your system
+# Avoid a Race condition by waiting 2 seconds.
 sleep 2
 
 # Unbind the GPU from display driver
