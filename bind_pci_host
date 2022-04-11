@@ -31,9 +31,9 @@ killall pulseaudio
 pulseaudio --start
 
 # Remove the port forward rules
-iptables -t nat -D PREROUTING -p tcp -d 192.168.0.100 --dport 3389 -j DNAT \
-    --to 192.168.122.100:3389
-iptables -t filter -D FORWARD -p tcp -d 192.168.122.100 --dport 3389 -j ACCEPT
+# iptables -t nat -D PREROUTING -p tcp -d 192.168.0.100 --dport 3389 -j DNAT \
+#     --to 192.168.122.100:3389
+# iptables -t filter -D FORWARD -p tcp -d 192.168.122.100 --dport 3389 -j ACCEPT
 
 echo Finished binding the GPU... >> /home/shigoyal/Documents/gpu_passthrough/libvert_hooks/log
 
