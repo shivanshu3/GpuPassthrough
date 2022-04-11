@@ -2,3 +2,20 @@ I followed the instructions from here:
 https://github.com/joeknock90/Single-GPU-Passthrough
 https://wiki.archlinux.org/title/PCI_passthrough_via_OVMF
 
+Using libvirt hooks will allow us to automatically run scripts before the VM is started and after the VM has stopped.
+
+/etc/libvirt/hooks
+├── qemu <- The script that does the magic
+└── qemu.d
+    └── {VM Name}
+        ├── prepare
+        │   └── begin
+        │       └── start.sh
+        └── release
+            └── end
+                └── revert.sh
+
+Anything in the directory /etc/libvirt/hooks/qemu.d/{VM Name}/prepare/begin will run when starting your VM
+
+Anything in the directory /etc/libvirt/hooks/qemu.d/{VM Name}/release/end will run when your VM is stopped
+
