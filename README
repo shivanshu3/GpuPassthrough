@@ -19,3 +19,9 @@ Anything in the directory /etc/libvirt/hooks/qemu.d/{VM Name}/prepare/begin will
 
 Anything in the directory /etc/libvirt/hooks/qemu.d/{VM Name}/release/end will run when your VM is stopped
 
+Notes:
+Either of these will require a user systemd service. You can keep user systemd services
+running by enabling linger for your user account like so:
+sudo loginctl enable-linger {username}
+This will keep services running even when your account is not logged in.
+
