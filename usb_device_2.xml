@@ -1,0 +1,8 @@
+<!-- Keyboard -->
+<hostdev mode='subsystem' type='usb' managed='yes'>
+  <source>
+    <vendor id='0x320f'/>
+    <product id='0x500d'/>
+  </source>
+</hostdev>
+

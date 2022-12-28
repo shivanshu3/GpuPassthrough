@@ -1,0 +1,3 @@
+#!/bin/sh
+virsh attach-device win10-work usb_device_1.xml
+virsh attach-device win10-work usb_device_2.xml
